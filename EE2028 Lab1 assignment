@@ -1,0 +1,90 @@
+#include <stdio.h>
+
+/*Initialisation*/
+int startDay = 0;
+int startMonth = 0;
+int startYear = 0;
+
+int deltaDay = 0;
+int deltaMonth = 0;
+int deltaYear = 0;
+
+int inputDays = 0;
+
+int monthArray[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+void userInput();
+void convertToDMY(int days);
+void printResults();
+int isLeapYear(int yearNo);
+
+/*main function*/
+int main(){
+  userInput();
+  convertToDMY(inputDays);
+  printResults();
+
+  return 0;
+}
+
+void userInput(){
+ printf("Your input days:");
+ scanf("%d",&inputDays);
+
+ printf("Your starting month: ");
+ scanf("%d/n",&startMonth);
+
+ printf("Your starting day: ");
+ scanf("%d/n",&startDay);
+
+ printf("Your input year: ");
+ scanf("%d/n",&startYear);
+}
+
+
+/*Other functions*/
+/*Check if leap year. Sets no of days in feb*/
+int isLeapYear(int yearNo){
+  if(yearNo%4 == 0){
+    monthArray[1] = 29;
+    return 1;
+  }
+  else{
+    monthArray[1] = 28;
+    return 0;
+  }
+}
+
+/*Based on inputDays, change deltaDay, deltaMonth, deltaYear */
+void convertToDMY(int days){
+
+  /*Finding years*/
+  while(days>=365)
+  {
+    if(isLeapYear(startYear))
+      days = days - 366;
+    else
+      days = days - 365;
+    
+    deltaYear++;
+    startYear++; 
+  }
+  
+  isLeapYear(startYear);
+  /*Finding month*/
+  for(int monthNo=(startMonth-1); days > monthArray[monthNo]; monthNo++)
+  {
+      days = days - monthArray[monthNo];
+      deltaMonth++;
+  } 
+
+  /*Finding day*/
+  deltaDay = days;
+}
+
+void printResults(){
+  printf("No of years: %d\n", deltaYear);
+  printf("No of months: %d\n", deltaMonth);
+  printf("No of days: %d", deltaDay);
+}
+
