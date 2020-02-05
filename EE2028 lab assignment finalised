@@ -3,68 +3,69 @@
 
 int main()
 {
- int month_number[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    int month_number[12] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
 
 
- int inputdays,startday,startmonth,startyear,inputdayss = 0,startdayy = 0 ,startmonthh = 0,startyearr = 0;
- int counterdays = 0, countermonths = 0, counteryears= 0, counter = 0;
+    int inputdays, startday, startmonth, startyear, inputdayss = 0, startdayy = 0, startmonthh = 0, startyearr = 0;
+    int counterdays = 0, countermonths = 0, counteryears = 0, counter = 0;
 
- printf("Enter input days: ");
- scanf("%d/n",&inputdays);
- printf("Your input days: %d days\n", inputdays);
- inputdayss = inputdayss + inputdays;
+    printf("Enter input days: ");
+    scanf("%d/n", &inputdays);
+    printf("Your input days: %d days\n", inputdays);
+    inputdayss = inputdayss + inputdays;
 
- printf("Your starting month: ");
- scanf("%d/n",&startmonth);
- startmonthh = startmonthh + startmonth;
+    printf("Your starting month: ");
+    scanf("%d/n", &startmonth);
+    startmonthh = startmonthh + startmonth;
 
- printf("Your starting day: ");
- scanf("%d/n",&startday);
- startdayy = startdayy + startday;
+    printf("Your starting day: ");
+    scanf("%d/n", &startday);
+    startdayy = startdayy + startday;
 
- printf("Your input year: ");
- scanf("%d/n",&startyear);
- startyearr = startyearr + startyear;
+    printf("Your input year: ");
+    scanf("%d/n", &startyear);
+    startyearr = startyearr + startyear;
 
- while (inputdays >= 365)
- {
-   if (startyear%4 == 0) 
-   {
-     counteryears++;
-     startyear++; 
-     inputdays = inputdays - 366;
-   }
-   else
-   {
-     counteryears++;
-     startyear++;
-     inputdays = inputdays - 365;
-   }
- }
-   
-
-  while (inputdays >= 29)
-  {
-    if (startyear%4==0)
+    while (inputdays >= 365)
     {
-      month_number[1] = 29;
-      inputdays = inputdays - month_number[startmonth-1];
-      countermonths++;
-      startmonth++;
+        if (startyear % 4 == 0 && startmonth <= 2 && inputdays > 365 || (startyear + 1) % 4 == 0 && startmonth >= 3 && inputdays > 365)
+        {
+            counteryears++;
+            startyear++;
+            inputdays = inputdays - 366;
+        }
+        else
+        {
+            counteryears++;
+            startyear++;
+            inputdays = inputdays - 365;
+        }
     }
-    else
-    {
-      month_number[1] = 28;
-      inputdays = inputdays - month_number[startmonth-1];
-      countermonths++;
-      startmonth++;
-    }
-    if (startmonth == 12)
-    {
-      startmonth = 1;
-    }
-  }
-  printf("%d days from %d/%d/%d = %d years %d months %d days",inputdayss,startdayy,startmonthh,startyearr,counteryears,countermonths,inputdays);
 
-return 0;
+
+    while (inputdays >= 29)
+    {
+        if (startyear % 4 == 0)
+        {
+            month_number[1] = 29;
+            inputdays = inputdays - month_number[startmonth - 1];
+            countermonths++;
+            startmonth++;
+        }
+        else
+        {
+            month_number[1] = 28;
+            inputdays = inputdays - month_number[startmonth - 1];
+            countermonths++;
+            startmonth++;
+        }
+        if (startmonth == 12)
+        {
+            startmonth = 1;
+            startyear++;
+        }
+    }
+    printf("%d days from %d/%d/%d = %d years %d months %d days", inputdayss, startdayy, startmonthh, startyearr, counteryears, countermonths, inputdays);
+
+    return 0;
 }
