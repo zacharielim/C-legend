@@ -1,0 +1,143 @@
+#include <stdio.h>
+#include <math.h>
+
+int fibonacci(int,int,int);
+int fibarray[100];
+int checkdivide(int);
+int Twos_counter = 0,Threes_counter = 0,Fives_counter = 0;
+int sum = 0;
+
+int main()
+{
+  int n,m;
+  printf("Please enter n: ");
+  scanf("%d",&n);
+  printf("Please enter m: ");
+  scanf("%d",&m);
+  printf("==================\n");
+  
+  fibonacci(1,m,n);
+}
+
+checkdivide(int pdt)
+{
+  char str[10];
+  if (pdt%2 == 0 && pdt%3 == 0 && pdt%5 ==0)
+  {
+    Twos_counter += 1;
+    Threes_counter += 1;
+    Fives_counter += 1;
+    return "(2,3,5)";  
+  }
+  else if (pdt%2 != 0 && pdt%3 == 0 && pdt%5 ==0)
+  {
+    Threes_counter += 1;
+    Fives_counter += 1;
+    return "(_,3,5)";
+  }
+  else if (pdt%2 != 0 && pdt%3 != 0 && pdt%5 ==0)
+  {
+    Fives_counter += 1;
+    return "(_,_,5)";
+  }
+  else if (pdt%2 != 0 && pdt%3 != 0 && pdt%5 != 0)
+  {
+    return "(_,_,_)";
+  }
+  else if (pdt%2 == 0 && pdt%3 != 0 && pdt%5 != 0)
+  {
+    Twos_counter += 1;
+    return "(2,_,_)";
+  }
+  else if (pdt%2 == 0 && pdt%3 != 0 && pdt%5 == 0)
+  {
+    Twos_counter += 1;
+    Fives_counter += 1;
+    return "(2,_,5)";
+  }
+  else if (pdt%2 != 0 && pdt%3 == 0 && pdt%5 == 0)
+  {
+    Threes_counter += 1;
+    Fives_counter += 1;
+    return "(_,3,5)";
+  }
+  else if (pdt%2 != 0 && pdt%3 == 0 && pdt%5 != 0)
+  {
+    Threes_counter += 1;
+    return "(_,3,_)";
+  }
+  else if (pdt%2 == 0 && pdt%3 == 0 && pdt%5 != 0)
+  {
+    Twos_counter += 1;
+    Threes_counter += 1;
+    return "(2,3,_)";
+  }
+}
+
+int fibonacci(int m, int v, int n)
+{
+  int pdt;
+  
+  if (m == 1)
+  {
+    fibarray[m-1] = 0;
+    if (m >= n)
+    {
+      printf("(%d,%d,0),(2,3,5)\n",m,fibarray[m]);
+      Twos_counter += 1;
+      Threes_counter += 1;
+      Fives_counter += 1;
+      return fibonacci(m+1,v,n);
+    }
+    else
+    {
+      return fibonacci(m+1,v,n);
+    } 
+  }
+  else if (m == 2)
+  {
+    fibarray[m-1] = 1;
+    if (m >= n)
+    {
+      printf("(%d,%d,0),(2,3,5)\n",m,fibarray[m]);
+      Twos_counter += 1;
+      Threes_counter += 1;
+      Fives_counter += 1;
+      return fibonacci(m+1,v,n);
+    }
+    else
+    {
+      return fibonacci(m+1,v,n);
+    } 
+  }
+  else if (m >= 3)
+  {
+    fibarray[m-1] = fibarray[m-2] + fibarray[m-3];
+    pdt = fibarray[m-1] * fibarray[m-2];
+    if (m == v)
+    { 
+      for (int i = n ; i <= v ; i++)
+      {
+        sum = sum + fibarray[i-1];
+      }
+      printf("(%d,%d,%d),%s\n\n",m,fibarray[m-1],pdt,checkdivide(pdt));
+      printf("Number of Product terms divisible by 2: %d\n",Twos_counter);
+      printf("Number of Product terms divisible by 3: %d\n",Threes_counter);
+      printf("Number of Product terms divisible by 5: %d\n",Fives_counter);
+
+      printf("Sum of all Fibonacci numbers: %d",sum);
+
+      
+      return 0; 
+    } 
+    else if (m >= n)
+    {
+      printf("(%d,%d,%d),%s\n",m,fibarray[m-1],pdt,checkdivide(pdt));
+      return fibonacci(m+1,v,n);
+    }
+    else
+    {
+      return fibonacci(m+1,v,n);
+    }
+    }
+  }
